@@ -8,22 +8,41 @@ This repository contains instructions only. You must install the CLI separately,
 
 ## Prerequisites
 
-Run the CLI on a Linux sender with glibc on x86-64. Linux aarch64 installation and fresh email-code login are experimental. Existing-session transfers, shutdown, and recovery with systemd have been tested. macOS support is not yet verified.
+Linux x86-64 with glibc has verified existing-session transfers, shutdown, and recovery with systemd. Linux aarch64 and fresh email-code login remain experimental.
+
+macOS is a preview. Native startup, status, and stop have been verified on Apple Silicon running macOS 27.0.1 with Blip 1.2.3. Authenticated macOS transfers have not been verified. The archive also contains Intel code, but Intel runtime support is experimental.
 
 The sender needs:
 
-- Node.js 22 or newer.
-- `curl` and `git` for installation.
-- A C compiler available as `cc`, plus `tar` and `sha256sum`, to install the native runtime.
+- Node.js 22 or newer. The client has no npm dependencies.
+- `git`, `curl`, and a C compiler available as `cc` for installation.
+- On Linux, `tar` and `sha256sum`. On macOS, `unzip`, `shasum`, and `codesign`. If `cc` is missing on macOS, run `xcode-select --install` to install Apple's Command Line Tools.
 - The separately installed [blip-cli](https://github.com/SahilUX/blip-cli#readme), with its command on `PATH`. The default command is `blip`.
-- The native Blip engine installed by the CLI's installer, and a signed-in Blip account. The installer verifies the pinned SHA-256 checksum of the official Blip 1.2.6 archive, retains the native library, and builds a small C host in `~/.local/lib/blip-cli`. It does not install the GUI app or Java runtime. No Xvfb or D-Bus session is needed. The Node.js client has no npm dependencies.
+- The native Blip engine installed by the CLI's installer, and a signed-in Blip account.
 - Blip installed and signed in to the same account on the receiving device. Keep Blip open on phones and computers awake during a transfer.
 
-Follow the CLI README for installation, migration from a desktop runtime, and interactive login. Existing Linux sessions use `~/.local/share/net.blip.Blip` and the socket `~/.cache/net.blip.Blip/sock`. Stop the old runtime and update any service that launches `~/.local/bin/blip` before installing, because that path becomes the CLI. A skill clone installs none of these prerequisites. For commercial activities, Blip's terms require a Business plan.
+The installer verifies a pinned SHA-256 checksum of the official archive and builds a small C host in `~/.local/lib/blip-cli`. Linux uses the Blip 1.2.6 native library. macOS uses the intact, vendor-signed `BlipKit.framework` from Blip 1.2.3, including its signature resources and `Info.plist`. The host launches no GUI executable or Java runtime. It needs no Xvfb or D-Bus session; macOS still uses Apple framework dependencies.
+
+Follow the [CLI README](https://github.com/SahilUX/blip-cli#readme) for installation and interactive login. A skill clone installs none of these prerequisites. For commercial activities, Blip's terms require a Business plan.
+
+### Linux sessions
+
+Existing Linux sessions use `~/.local/share/net.blip.Blip` and the socket `~/.cache/net.blip.Blip/sock`. Stop the old runtime and update any service that launches `~/.local/bin/blip` before installing, because that path becomes the CLI. Follow the CLI's desktop migration instructions to preserve the existing session.
+
+### macOS preview profile
+
+The CLI uses a separate profile and requires fresh CLI login. It does not access or migrate the desktop app's TCC-protected Group Container, or stop the desktop app.
+
+- Engine data: `~/Library/Application Support/blip-cli/engine`
+- Socket: `~/Library/Caches/blip-cli/engine/sock`
+- Logs, PID records, and temporary files: `~/Library/Caches/blip-cli`
+- Remembered recipient: `~/Library/Application Support/blip-cli/config.json`, unless an absolute `XDG_CONFIG_HOME` selects another config directory
+
+`BLIP_APP` defaults to `~/.local/lib/blip-cli/blip-core` on both platforms. On macOS, `BLIP_LIB` defaults to `~/.local/lib/blip-cli/BlipKit.framework/Versions/A/BlipKit`. These select the native host and library. Use the CLI installer to retain the complete signed framework.
 
 ## Install the skill manually
 
-Install into the directory your agent scans for skills, using `blip-cli` as the folder name. Run one of these examples on the machine where the agent discovers skills. Execute transfers on the configured Linux sender.
+Install into the directory your agent scans for skills, using `blip-cli` as the folder name. Run one of these examples on the machine where the agent discovers skills. Execute transfers on the configured sender, within the verified platform limits above.
 
 For Codex's default user skills directory:
 
