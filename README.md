@@ -10,7 +10,7 @@ This repository contains instructions only. You must install the CLI separately,
 
 Linux x86-64 with glibc has verified existing-session transfers, shutdown, and recovery with systemd. Linux aarch64 and fresh email-code login remain experimental.
 
-macOS is a preview. Official installation, vendor signature verification, and native startup, status, and stop have been verified on Apple Silicon running macOS 27.0.1 with Blip 1.2.3. macOS login, logout, and authenticated transfers have not been verified against the real service. Automated tests do not establish that support. The archive also contains Intel code, but Intel runtime support is experimental.
+macOS is a preview. Official installation, vendor signature verification, and native startup, status, and stop have been verified on Apple Silicon running macOS 27.0.1 with Blip 1.2.3. Real email-code login and authenticated transfers from the Mac CLI to Linux and the Mac desktop app have been verified. File and nested-folder transfers completed with matching SHA-256 checksums. Native stop/start/status preserved the signed-in device. Real-service logout and unattended or SSH operation on macOS remain unverified. The archive also contains Intel code, but Intel runtime support is experimental.
 
 The sender needs:
 
@@ -31,7 +31,7 @@ Existing Linux sessions use `~/.local/share/net.blip.Blip` and the socket `~/.ca
 
 ### macOS preview profile
 
-The CLI uses a separate profile and requires fresh CLI login. It does not access or migrate the desktop app's TCC-protected Group Container, or stop the desktop app.
+The CLI uses a separate profile and requires fresh CLI login. The CLI does not read or migrate the desktop app's credential files or stop the desktop app. The native framework may use Apple system storage, so the separate profile does not guarantee that all credentials stay under the CLI data directory.
 
 - Engine data: `~/Library/Application Support/blip-cli/engine`
 - Socket: `~/Library/Caches/blip-cli/engine/sock`
