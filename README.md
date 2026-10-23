@@ -10,7 +10,7 @@ This repository contains instructions only. You must install the CLI separately,
 
 Linux x86-64 with glibc has verified existing-session transfers, shutdown, and recovery with systemd. Linux aarch64 and fresh email-code login remain experimental.
 
-macOS is a preview. Native startup, status, and stop have been verified on Apple Silicon running macOS 27.0.1 with Blip 1.2.3. Authenticated macOS transfers have not been verified. The archive also contains Intel code, but Intel runtime support is experimental.
+macOS is a preview. Official installation, vendor signature verification, and native startup, status, and stop have been verified on Apple Silicon running macOS 27.0.1 with Blip 1.2.3. macOS login, logout, and authenticated transfers have not been verified against the real service. Automated tests do not establish that support. The archive also contains Intel code, but Intel runtime support is experimental.
 
 The sender needs:
 
