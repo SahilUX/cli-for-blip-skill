@@ -1,11 +1,13 @@
 ---
-name: blip-cli
-description: Send files and folders to devices on the user's own Blip account through the separately installed blip-cli on Linux or the macOS preview. Use for Blip sends, device discovery, and transfer checks. Other recipients and installation of Blip itself are outside this skill's send workflow.
+name: cli-for-blip
+description: Send files and folders to devices on the user's own Blip account through the separately installed CLI for Blip (command `blip`) on Linux or the macOS preview. Use for Blip sends, device discovery, and transfer checks. Other recipients and installation of Blip itself are outside this skill's send workflow.
 ---
 
-# Use blip-cli
+# Use CLI for Blip
 
-This skill uses the independent [blip-cli](https://github.com/SahilUX/blip-cli) project, normally installed as `blip`. It contains no CLI or native engine. Read [installation and prerequisites](README.md#prerequisites) when setup is missing. CLI access is currently restricted because its repository is private.
+Unofficial. Not affiliated with or endorsed by Blip Studio Inc.
+
+This skill uses the independent [CLI for Blip](https://github.com/SahilUX/cli-for-blip) project, normally installed as `blip`. It contains no CLI or native engine. Read [installation and prerequisites](README.md#prerequisites) when setup is missing. CLI access is currently restricted because its repository is private.
 
 ## Check the environment
 
@@ -55,7 +57,7 @@ blip transfers <transfer-id>
 
 Without an ID, `blip transfers` shows only each transfer's ID, direction, and state, with no recipient, file, or time, so it cannot identify a lost transfer. If you did not capture the `transfer <id>` line, do not guess from the list and do not resend. Tell the user a transfer may still be queued and that it can be declined or cancelled only on the receiving device. An unfinished transfer may still deliver later. Check a captured ID again later. Avoid automatic resends that could duplicate delivery. For a later authorized send of a large file, choose a longer `BLIP_TIMEOUT_S` that still fits your command time limit, or run `send` in the background.
 
-For startup or connection failures, consult the [CLI troubleshooting guide](https://github.com/SahilUX/blip-cli#troubleshooting). Use the summaries from `blip status`, `blip devices`, and `blip transfers`, and share only necessary, redacted diagnostics. Never read Blip's `state.dat` or request or print raw `GetState` output. Both contain session credentials. App logs and status output can also contain account or device details. Do not list, read, move, or delete the contents of Blip's session data directories or the desktop app's Group Container, and do not list, read, or change Blip's Keychain items. Use the directory paths only to recognize them.
+For startup or connection failures, consult the [CLI troubleshooting guide](https://github.com/SahilUX/cli-for-blip#troubleshooting). Use the summaries from `blip status`, `blip devices`, and `blip transfers`, and share only necessary, redacted diagnostics. Never read Blip's `state.dat` or request or print raw `GetState` output. Both contain session credentials. App logs and status output can also contain account or device details. Do not list, read, move, or delete the contents of Blip's session data directories or the desktop app's Group Container, and do not list, read, or change Blip's Keychain items. Use the directory paths only to recognize them.
 
 ## Compatibility and rights
 
