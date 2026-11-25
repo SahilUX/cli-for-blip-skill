@@ -7,7 +7,7 @@ description: Send files and folders to devices on the user's own Blip account th
 
 Unofficial. Not affiliated with or endorsed by Blip Studio Inc.
 
-This skill uses the independent [CLI for Blip](https://github.com/SahilUX/cli-for-blip) project, normally installed as `blip`. It contains no CLI or native engine. Read [installation and prerequisites](README.md#prerequisites) when setup is missing. CLI access is currently restricted because its repository is private.
+This skill uses the independent [CLI for Blip](https://github.com/SahilUX/cli-for-blip) project, normally installed as `blip`. It contains no CLI or native engine. Read [installation and prerequisites](README.md#prerequisites) when setup is missing.
 
 ## Check the environment
 

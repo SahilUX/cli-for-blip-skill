@@ -2,11 +2,11 @@
 
 An unofficial agent skill that works with Blip through CLI for Blip. This project is independent. It is not affiliated with, endorsed by, or sponsored by Blip Studio Inc.
 
+I made this for free, for Blip to implement if they want to. Blip has not approved or endorsed it.
+
 The skill covers sending files and folders to devices on your own [Blip](https://blip.net/) account through [SahilUX/cli-for-blip](https://github.com/SahilUX/cli-for-blip). The skill is named `cli-for-blip`. It guides recipient selection, waits for delivery, and checks transfers after timeouts.
 
 This repository contains instructions only. You must install the CLI separately, with its native Blip engine, and sign in to a Blip account.
-
-**CLI availability:** `SahilUX/cli-for-blip` is currently private. You need access to that repository to install the implementation this skill supports. Installing this public skill does not grant access or provide a replacement CLI. The CLI link may return 404 when you are not authorized.
 
 ## Prerequisites
 
@@ -90,7 +90,7 @@ See [SKILL.md](SKILL.md) for the workflow and the [CLI README](https://github.co
 
 [Blip](https://blip.net/) is software and a service provided by Blip Studio Inc. This project is independent and unofficial. It is not affiliated with, endorsed by, or sponsored by Blip Studio Inc.
 
-The [MIT license](LICENSE) applies to this repository's original skill and documentation text, copyright 2026 Sahil Saleem. It grants no rights to Blip's proprietary software, services, content, or trademarks. This repository includes no Blip logos, app binaries, or decompiled code. The separate CLI has its own MIT license and [legal provenance notice](https://github.com/SahilUX/cli-for-blip/blob/main/LEGAL.md), accessible to authorized repository users.
+The [MIT license](LICENSE) applies to this repository's original skill and documentation text, copyright 2026 Sahil Saleem. It grants no rights to Blip's proprietary software, services, content, or trademarks. This repository includes no Blip logos, app binaries, or decompiled code. The separate CLI has its own MIT license and [legal provenance notice](https://github.com/SahilUX/cli-for-blip/blob/main/LEGAL.md).
 
 Blip's [terms of service](https://blip.net/terms-of-service), last reviewed November 26, 2026 and marked updated January 18, 2025, reserve Blip's trademark and content rights, restrict trademark use without permission, and grant limited intended-purpose use. They require a Business plan for commercial activities.
 
