@@ -10,9 +10,9 @@ This repository contains instructions only. You must install the CLI separately,
 
 ## Prerequisites
 
-Linux x86-64 with glibc has verified existing-session transfers and shutdown. Recovery was also verified under a systemd user service, a setup the CLI README does not document; it describes only cron startup. Linux aarch64, fresh email-code login, and real-service logout remain experimental.
+Linux x86-64 with glibc has verified existing-session transfers and shutdown. Recovery was also verified under a systemd user service, a setup the CLI README does not document; it describes only cron startup. On November 26, 2026, a fresh email-code login, a restart that kept the session, and a real logout were verified on Linux x86-64 with a real account. That used the logout code from before exit code 4 existed. The current logout has been tested only with the Linux engine against a fake server, without a real account. Linux aarch64 remains experimental.
 
-macOS is a preview. Official installation, vendor signature verification, and native startup, status, and stop have been verified on Apple Silicon running macOS 27.0.1 with Blip 1.2.3. Real email-code login and authenticated transfers from the Mac CLI to Linux and the Mac desktop app have been verified. File and nested-folder transfers completed with matching SHA-256 checksums. Native stop/start/status preserved the signed-in device. Real-service logout and unattended or SSH operation on macOS remain unverified. The archive also contains Intel code, but Intel runtime support is experimental.
+macOS is a preview. Official installation, vendor signature verification, and native startup, status, and stop have been verified on Apple Silicon running macOS 27.0.1 with Blip 1.2.3. Real email-code login and authenticated transfers from the Mac CLI to Linux and the Mac desktop app have been verified. File and nested-folder transfers completed with matching SHA-256 checksums. Native stop/start/status preserved the signed-in device. Logout on macOS has not been tested, and unattended or SSH operation on macOS remains unverified. The archive also contains Intel code, but Intel runtime support is experimental.
 
 The sender needs:
 

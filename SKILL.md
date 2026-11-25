@@ -15,7 +15,7 @@ Run commands on the user's configured sender as the account that owns the Blip s
 
 Check `node --version` and locate the CLI with `command -v blip`. Non-interactive shells, such as SSH commands, cron, or services, often lack `~/.local/bin` on `PATH`, so check `~/.local/bin/blip` before concluding the CLI is missing. `blip` can also be the official app's launcher, so confirm it is this CLI without executing it: `readlink -f` on its path ends in `/blip.mjs`, or the file's second line starts with `// blip: headless command line for the Blip native engine`. Only then run `blip --help`. If the CLI has a custom executable name or path, use that verified command throughout.
 
-The sender needs Node.js 22+, the separately installed CLI and its native runtime, and a signed-in Blip account. The CLI runs a small C host directly, without a GUI, Java, Xvfb, or D-Bus. Read the [platform prerequisites](README.md#prerequisites) when setup is missing or platform support is uncertain. Linux x86-64 with glibc has verified existing-session transfers; aarch64, fresh email-code login, and real-service logout remain experimental. macOS remains a preview. Apple Silicon has verified real email-code login, authenticated file transfers to Linux and the Mac desktop app, nested-folder transfers to the Mac desktop app, and native restart with the signed-in device preserved. Real-service logout and unattended or SSH operation on macOS remain unverified. Intel is experimental. The recipient needs Blip on the same account, open on phones or awake on computers.
+The sender needs Node.js 22+, the separately installed CLI and its native runtime, and a signed-in Blip account. The CLI runs a small C host directly, without a GUI, Java, Xvfb, or D-Bus. Read the [platform prerequisites](README.md#prerequisites) when setup is missing or platform support is uncertain. Linux x86-64 with glibc has verified existing-session transfers; a fresh email-code login, a session-preserving restart, and a real logout were also verified there, before logout gained exit code 4. The current logout has been tested only against a fake server. Linux aarch64 remains experimental. macOS remains a preview. Apple Silicon has verified real email-code login, authenticated file transfers to Linux and the Mac desktop app, nested-folder transfers to the Mac desktop app, and native restart with the signed-in device preserved. Logout on macOS has not been tested, and unattended or SSH operation on macOS remains unverified. Intel is experimental. The recipient needs Blip on the same account, open on phones or awake on computers.
 
 On macOS, use the CLI's separate profile. A desktop sign-in does not authenticate the CLI. Preserve the desktop app's credential files and process; the CLI does not read or migrate those files or stop the desktop app. The framework may use Apple system storage. Do not infer that all credentials live under the CLI data directory. Read the [macOS profile paths](README.md#macos-preview-profile) for setup or diagnostics.
 
@@ -46,7 +46,7 @@ A running engine makes this machine an online Blip device. It keeps running afte
 
 - Exit 1 means an error or cancellation. Inspect the reported error before deciding what to do next.
 - Exit 2 means invalid usage. Correct the command using `blip --help`.
-- Exit 3 means the wait expired or contact with Blip was lost after transfer creation. `BLIP_TIMEOUT_S` sets the wait. A timeout does not cancel the transfer. Exit 130 or 143 means the wait was interrupted or terminated; the transfer can still deliver.
+- For `send`, exit 3 means the wait expired or contact with Blip was lost after transfer creation. `BLIP_TIMEOUT_S` sets the wait. A timeout does not cancel the transfer. Exit 130 or 143 means the wait was interrupted or terminated; the transfer can still deliver.
 - Handle `send` like exit 3 when your harness killed it or timed it out, or when it exited with any code other than 0, 1, or 2 after printing the `transfer <id>` line. A killed `send`, such as exit 137 after SIGKILL, prints no `stays queued` message.
 
 For an interrupted or timed-out send, check the existing transfer before retrying:
@@ -58,6 +58,17 @@ blip transfers <transfer-id>
 Without an ID, `blip transfers` shows only each transfer's ID, direction, and state, with no recipient, file, or time, so it cannot identify a lost transfer. If you did not capture the `transfer <id>` line, do not guess from the list and do not resend. Tell the user a transfer may still be queued and that it can be declined or cancelled only on the receiving device. An unfinished transfer may still deliver later. Check a captured ID again later. Avoid automatic resends that could duplicate delivery. For a later authorized send of a large file, choose a longer `BLIP_TIMEOUT_S` that still fits your command time limit, or run `send` in the background.
 
 For startup or connection failures, consult the [CLI troubleshooting guide](https://github.com/SahilUX/cli-for-blip#troubleshooting). Use the summaries from `blip status`, `blip devices`, and `blip transfers`, and share only necessary, redacted diagnostics. Never read Blip's `state.dat` or request or print raw `GetState` output. Both contain session credentials. App logs and status output can also contain account or device details. Do not list, read, move, or delete the contents of Blip's session data directories or the desktop app's Group Container, and do not list, read, or change Blip's Keychain items. Use the directory paths only to recognize them.
+
+## Check a logout
+
+Run `blip logout` only when the user asked for it. Report its result from the exit code:
+
+- Exit 0 means the engine logged that the device was removed from the account and signed out, or that no one was signed in. Read the message to tell which.
+- Exit 4 means this machine is signed out, but the removal is not confirmed, for example because it was offline. Tell the user the device may still be on the account. They can remove it in Blip on another device, or run `blip login` and then `blip logout` while online. Do not report the device as removed.
+- Exit 3 means Blip did not sign out in time, or contact was lost. It may still finish, so run `blip status` before doing anything else. Logout waits up to 30 seconds, or `BLIP_TIMEOUT_S` if smaller.
+- Other codes are errors or an interruption. Exit 1 is an error, such as Blip failing to start.
+
+Older CLI versions have no exit 4 and report `signed out` even when the removal failed. With them, do not treat exit 0 as proof of removal.
 
 ## Compatibility and rights
 
